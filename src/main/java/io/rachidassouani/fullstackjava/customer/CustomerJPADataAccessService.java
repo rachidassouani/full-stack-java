@@ -21,6 +21,6 @@ public class CustomerJPADataAccessService implements CustomerDao {
 
     @Override
     public Optional<Customer> findCustomerById(Long id) {
-        return Optional.empty();
+        return customerRepository.findById(id);
     }
 }
