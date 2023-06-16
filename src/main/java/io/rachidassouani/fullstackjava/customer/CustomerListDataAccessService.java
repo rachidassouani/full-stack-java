@@ -17,4 +17,14 @@ public class CustomerListDataAccessService implements CustomerDao {
     public Optional<Customer> findCustomerById(Long id) {
         return Optional.empty();
     }
+
+    @Override
+    public void saveCustomer(Customer customer) {
+
+    }
+
+    @Override
+    public boolean isCustomerExistsWithEmail(String email) {
+        return false;
+    }
 }

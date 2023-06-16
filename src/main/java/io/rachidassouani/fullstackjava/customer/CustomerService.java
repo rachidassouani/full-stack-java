@@ -1,5 +1,6 @@
 package io.rachidassouani.fullstackjava.customer;
 
+import io.rachidassouani.fullstackjava.exception.DuplicateResourceException;
 import io.rachidassouani.fullstackjava.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,21 @@ public class CustomerService {
         return customerDao.findCustomerById(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Customer with id [%s] not found".formatted(customerId)));
+    }
+
+    public void saveCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
+
+        // check if customer's email is already exist
+        if (customerDao.isCustomerExistsWithEmail(customerRegistrationRequest.email())) {
+            throw new DuplicateResourceException("Email already taken");
+        }
+
+        // saving customer
+        customerDao.saveCustomer(
+                new Customer(
+                        customerRegistrationRequest.firstName(),
+                        customerRegistrationRequest.lastName(),
+                        customerRegistrationRequest.email())
+        );
     }
 }

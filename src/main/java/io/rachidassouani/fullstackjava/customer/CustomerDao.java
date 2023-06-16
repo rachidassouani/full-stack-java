@@ -6,4 +6,6 @@ import java.util.Optional;
 public interface CustomerDao {
     List<Customer> findAllCustomers();
     Optional<Customer> findCustomerById(Long id);
+    void saveCustomer(Customer customer);
+    boolean isCustomerExistsWithEmail(String email);
 }
