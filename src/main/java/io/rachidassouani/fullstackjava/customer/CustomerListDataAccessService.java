@@ -37,4 +37,9 @@ public class CustomerListDataAccessService implements CustomerDao {
     public void deleteCustomerById(Long customerId) {
 
     }
+
+    @Override
+    public void updateCustomer(Customer customer) {
+
+    }
 }

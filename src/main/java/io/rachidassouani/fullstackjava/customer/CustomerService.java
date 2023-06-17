@@ -1,6 +1,7 @@
 package io.rachidassouani.fullstackjava.customer;
 
 import io.rachidassouani.fullstackjava.exception.DuplicateResourceException;
+import io.rachidassouani.fullstackjava.exception.RequestValidationException;
 import io.rachidassouani.fullstackjava.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -52,5 +53,46 @@ public class CustomerService {
         }
         // delete customer by id
         customerDao.deleteCustomerById(customerId);
+    }
+
+    public void updateCustomer(Long customerId, CustomerUpdateRequest customerUpdateRequest) {
+
+        Customer customer = findCustomerById(customerId);
+
+        /*
+         update the customer only if the request body that accompanies the request contains fields
+         that are neither null nor empty and that are not equal to the existing field.
+         */
+
+        boolean changes = false;
+
+        if (customerUpdateRequest.firstName() != null && !customerUpdateRequest.firstName().isEmpty()
+                && !customerUpdateRequest.firstName().equals(customer.getFirstName())) {
+
+            customer.setFirstName(customerUpdateRequest.firstName());
+            changes = true;
+        }
+
+        if (customerUpdateRequest.lastName() != null && !customerUpdateRequest.lastName().isEmpty()
+                && !customerUpdateRequest.lastName().equals(customer.getLastName())) {
+
+            customer.setLastName(customerUpdateRequest.lastName());
+            changes = true;
+        }
+
+        if (customerUpdateRequest.email() != null && !customerUpdateRequest.email().isEmpty()
+                && !customerUpdateRequest.email().equals(customer.getEmail())) {
+
+            if (customerDao.isCustomerExistsWithEmail(customerUpdateRequest.email())) {
+                throw new DuplicateResourceException("email already taken");
+            }
+            customer.setEmail(customerUpdateRequest.email());
+            changes = true;
+        }
+
+        if (!changes) {
+            throw new RequestValidationException("No data changes found");
+        }
+        customerDao.updateCustomer(customer);
     }
 }
