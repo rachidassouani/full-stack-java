@@ -24,7 +24,7 @@ public class FullstackjavaApplication {
 			Customer customer2 = new Customer("Rachida", "Assouani", "rachida@gmail.com");
 			Customer customer3 = new Customer("Rachidaa", "Assouani", "rachidaa@gmail.com");
 
-			customerRepository.saveAll(List.of(customer1, customer2, customer3));
+			//customerRepository.saveAll(List.of(customer1, customer2, customer3));
 		};
 	}
 }
