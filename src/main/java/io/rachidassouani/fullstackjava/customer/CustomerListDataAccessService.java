@@ -27,4 +27,14 @@ public class CustomerListDataAccessService implements CustomerDao {
     public boolean isCustomerExistsWithEmail(String email) {
         return false;
     }
+
+    @Override
+    public boolean isCustomerExistsWithId(Long customerId) {
+        return false;
+    }
+
+    @Override
+    public void deleteCustomerById(Long customerId) {
+
+    }
 }

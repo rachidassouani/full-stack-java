@@ -43,4 +43,14 @@ public class CustomerService {
                         customerRegistrationRequest.email())
         );
     }
+
+    public void deleteCustomerById(Long customerId) {
+
+        // throw exception in case customer not exists
+        if (!customerDao.isCustomerExistsWithId(customerId)) {
+            throw new ResourceNotFoundException("Customer with id [%s] not found".formatted(customerId));
+        }
+        // delete customer by id
+        customerDao.deleteCustomerById(customerId);
+    }
 }
