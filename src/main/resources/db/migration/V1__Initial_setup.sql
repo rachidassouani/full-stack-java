@@ -1,5 +1,5 @@
 create table customer (
-    id BIGINT not null,
+    id BIGSERIAL,
     email VARCHAR(255) not null,
     first_name VARCHAR(255) not null,
     last_name VARCHAR(255) not null,
