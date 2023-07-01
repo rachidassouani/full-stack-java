@@ -3,6 +3,8 @@ package io.rachidassouani.fullstackjava.journey;
 import com.github.javafaker.Faker;
 import io.rachidassouani.fullstackjava.customer.Customer;
 import io.rachidassouani.fullstackjava.customer.CustomerRegistrationRequest;
+import io.rachidassouani.fullstackjava.customer.CustomerUpdateRequest;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -141,5 +143,72 @@ public class CustomerIntegrationTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void updateCustomerTest() {
+        // create registration request
+        Faker faker = new Faker();
+        String firstName = faker.name().firstName();
+        String lastName = faker.name().lastName();
+        String email = "integrationTest-" + UUID.randomUUID() + faker.internet().safeEmailAddress();
+
+        CustomerRegistrationRequest request =
+                new CustomerRegistrationRequest(firstName, lastName, email);
+
+        // send post request
+        webTestClient.post()
+                .uri(CUSTOMER_URI)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(request), CustomerRegistrationRequest.class)
+                .exchange()
+                .expectStatus().isOk();
+
+        // get all customers
+        List<Customer> allCustomers = webTestClient.get()
+                .uri(CUSTOMER_URI)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(new ParameterizedTypeReference<Customer>() {})
+                .returnResult()
+                .getResponseBody();
+
+        // get the id
+        var id = allCustomers.stream()
+                .filter(c -> c.getEmail().equals(email))
+                .map(c -> c.getId())
+                .findFirst()
+                .orElseThrow();
+
+        String newFirstName = "updatedFirstName";
+        String newLastName = "updatedLastName";
+        String newEmail = "updatedEmail@updatedEmail.com" + UUID.randomUUID() + faker.internet().safeEmailAddress();
+
+        CustomerUpdateRequest updateRequest =
+                new CustomerUpdateRequest(newFirstName, newLastName, newEmail);
+
+        // update customer by its id
+        webTestClient.put()
+                .uri(CUSTOMER_URI + "/{id}",  id)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(updateRequest), CustomerUpdateRequest.class)
+                .exchange()
+                .expectStatus().isOk();
+
+        Customer updatedCustomer = webTestClient.get()
+                .uri(CUSTOMER_URI + "/{id}", id)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Customer.class)
+                .returnResult()
+                .getResponseBody();
+
+        Customer customer = new Customer(id, newFirstName, newLastName, newEmail);
+
+        assertThat(updatedCustomer).isEqualToComparingFieldByField(customer);
     }
 }
