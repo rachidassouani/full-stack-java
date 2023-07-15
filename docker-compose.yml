@@ -14,6 +14,19 @@ services:
       - db
     restart: unless-stopped
 
+  backend_api:
+    container_name: backend_api
+    image: rachidassouani/fullstackjava
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/fullstackjava
+    ports:
+      - "8080:8080"
+    networks:
+      - db
+    depends_on:
+      - db
+    restart: unless-stopped
+
 networks:
   db:
     driver: bridge
