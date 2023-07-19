@@ -16,6 +16,7 @@ public class FullStackJavaApplication {
 	}
 
 
+
 	@Bean
 	CommandLineRunner commandLineRunner(CustomerRepository customerRepository) {
 		return args -> {
