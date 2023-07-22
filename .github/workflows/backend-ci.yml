@@ -1,17 +1,11 @@
 name: CI - Build Backend
+
 on:
   push:
     branches:
       - master
     paths:
       - backend/**
-
-env:
-  POSTGRESQL_VERSION: 15.3
-  POSTGRESQL_DB: fullstackjava
-  POSTGRESQL_USER: rachid
-  POSTGRESQL_PASSWORD: password
-  JAVA_VERSION: 1.15
 
 jobs:
   build:
@@ -20,17 +14,26 @@ jobs:
       postgres:
         image: postgres:15.3
         env:
-          POSTGRES_DB: ${{ env.POSTGRESQL_DB }}
-          POSTGRES_USER: ${{ env.POSTGRESQL_USER }}
-          POSTGRES_PASSWORD: ${{ env.POSTGRESQL_PASSWORD }}
+          POSTGRES_USER: rachid
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: fullstackjava
         ports:
           - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1.4.3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
         with:
-          java-version: ${{ env.JAVA_VERSION }}
-      - name: Maven Clean Package
-        run: |
-          ./mvnw --no-transfer-progress clean package -P build-frontend
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+      - name: Build and run Unit/Integration Tests with Maven
+        run: mvn -ntp -B verify
