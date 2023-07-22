@@ -7,10 +7,11 @@ on:
       - backend/**
 
 env:
-  POSTGRES_USER: rachid
-  POSTGRES_PASSWORD: password
-  POSTGRES_DB: fullstackjava
-  JAVA_VERSION: 17
+  POSTGRESQL_VERSION: 15.3
+  POSTGRESQL_DB: fullstackjava
+  POSTGRESQL_USER: rachid
+  POSTGRESQL_PASSWORD: password
+  JAVA_VERSION: 1.15
 
 jobs:
   build:
