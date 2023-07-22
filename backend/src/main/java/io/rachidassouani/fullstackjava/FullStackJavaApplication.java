@@ -14,6 +14,7 @@ public class FullStackJavaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FullStackJavaApplication.class, args);
 	}
+
 	@Bean
 	CommandLineRunner commandLineRunner(CustomerRepository customerRepository) {
 		return args -> {
