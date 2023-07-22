@@ -1,0 +1,45 @@
+name: CI - Build Backend
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - backend/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: rachid
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: fullstackjava
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready 
+          --health-timeout 5s 
+          --health-retries 5
+    defaults:
+      run:
+        working-directory: ../backend
+    steps:
+      - name: Wait for PostgreSQL to start
+        run: |
+          until pg_isready -h localhost -p 5432; do
+            sleep 2;
+          done
+      - name: Create database and initialize schema
+        run: |
+          psql -h localhost -U ${{ env.POSTGRES_USER }} -d ${{ env.POSTGRES_PASSWORD }} -c "CREATE DATABASE fullstackjava;"
+
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+      - name: Build and run Unit/Integration Tests with Maven
+        run: mvn -ntp -B verify
