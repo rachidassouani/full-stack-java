@@ -21,7 +21,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     public List<Customer> findAllCustomers() {
 
         String query = """
-                SELECT id, first_name, last_name, email 
+                SELECT id, first_name, last_name, email, password
                 FROM customer
                 """;
 
@@ -34,7 +34,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     public Optional<Customer> findCustomerById(Long id) {
 
         String query = """
-                SELECT id, first_name, last_name, email 
+                SELECT id, first_name, last_name, email, password
                 FROM customer
                 WHERE id = ? 
                 """;
@@ -47,13 +47,14 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     @Override
     public void saveCustomer(Customer customer) {
         var query = """
-                INSERT INTO customer (first_name, last_name, email) 
-                VALUES(?, ?, ?)                
+                INSERT INTO customer (first_name, last_name, email, password)
+                VALUES(?, ?, ?, ?)                
                 """;
         jdbcTemplate.update(query,
                 customer.getFirstName(),
                 customer.getLastName(),
-                customer.getEmail());
+                customer.getEmail(),
+                customer.getPassword());
     }
 
     @Override
@@ -61,7 +62,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
         String query = """
                 SELECT COUNT(id)
                 FROM customer
-                WHERE email = ? 
+                WHERE email = ?
                 """;
 
         Integer count = jdbcTemplate.queryForObject(query, Integer.class, email);
@@ -74,7 +75,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
         String query = """
                 SELECT COUNT(id)
                 FROM customer
-                WHERE id = ? 
+                WHERE id = ?
                 """;
 
         Integer count = jdbcTemplate.queryForObject(query, Integer.class, customerId);
@@ -86,7 +87,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     public void deleteCustomerById(Long customerId) {
         String query = """
                 DELETE
-                FROM customer 
+                FROM customer
                 WHERE id = ? 
                 """;
         jdbcTemplate.update(query, customerId);
@@ -94,11 +95,9 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
 
     @Override
     public void updateCustomer(Customer customer) {
-
-        System.out.println("cusr " + customer);
         if (customer.getFirstName() != null) {
             String query = """
-                    UPDATE customer 
+                    UPDATE customer
                     SET first_name = ? 
                     WHERE id = ?
                     """;
@@ -107,7 +106,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
 
         if (customer.getLastName() != null) {
             String query = """
-                    UPDATE customer 
+                    UPDATE customer
                     SET last_name = ? 
                     WHERE id = ?
                     """;
@@ -116,11 +115,24 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
 
         if (customer.getEmail() != null) {
             String query = """
-                    UPDATE customer 
-                    SET email = ? 
+                    UPDATE customer
+                    SET email = ?
                     WHERE id = ?
                     """;
             jdbcTemplate.update(query, customer.getEmail(), customer.getId());
         }
+    }
+
+    @Override
+    public Optional<Customer> findCustomerByEmail(String email) {
+        String query = """
+                SELECT id, first_name, last_name, email, password
+                FROM customer
+                WHERE email = ?
+                """;
+        return jdbcTemplate
+                .query(query, customerRowMapper, email)
+                .stream()
+                .findFirst();
     }
 }
