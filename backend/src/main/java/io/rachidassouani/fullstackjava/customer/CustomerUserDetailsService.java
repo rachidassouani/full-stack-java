@@ -1,0 +1,23 @@
+package io.rachidassouani.fullstackjava.customer;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+public class CustomerUserDetailsService implements UserDetailsService {
+
+    private final CustomerDao customerDao;
+
+    public CustomerUserDetailsService(@Qualifier("jpa") CustomerDao customerDao) {
+        this.customerDao = customerDao;
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return customerDao.findCustomerByEmail(username)
+                .orElseThrow(
+                        () -> new UsernameNotFoundException("Username " + username + " not found"));
+    }
+}
