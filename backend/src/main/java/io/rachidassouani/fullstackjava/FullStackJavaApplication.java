@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class FullStackJavaApplication {
@@ -16,7 +17,9 @@ public class FullStackJavaApplication {
 	}
 
 	@Bean
-	CommandLineRunner commandLineRunner(CustomerRepository customerRepository) {
+	CommandLineRunner commandLineRunner(CustomerRepository customerRepository,
+										PasswordEncoder passwordEncoder
+										) {
 		return args -> {
 			var name = new Faker().name();
 			String firstname = name.firstName();
@@ -24,8 +27,8 @@ public class FullStackJavaApplication {
 			Customer customer = new Customer(
 					firstname,
 					lastname,
-					firstname.toLowerCase()+"."+lastname.toLowerCase()+"@rachidassouani.com");
-
+					firstname.toLowerCase()+"."+lastname.toLowerCase()+"@rachidassouani.com",
+					passwordEncoder.encode("password"));
 			customerRepository.save(customer);
 		};
 	}

@@ -58,4 +58,13 @@ public class JWTUtil {
         return claims;
     }
 
+    public boolean isTokenValid(String jwtToken, String username) {
+        String subject = getSubject(jwtToken);
+        return subject.equals(username) && !isTokenExpired(jwtToken);
+    }
+
+    private boolean isTokenExpired(String jwtToken) {
+        Date today = Date.from(Instant.now());
+        return getClaims(jwtToken).getExpiration().before(today);
+    }
 }

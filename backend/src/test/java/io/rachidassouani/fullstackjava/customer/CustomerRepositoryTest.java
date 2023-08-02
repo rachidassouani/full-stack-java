@@ -18,7 +18,6 @@ class CustomerRepositoryTest extends TestContainersTest {
     @Autowired
     private CustomerRepository underTest;
 
-
     @BeforeEach
     void setUp() {
 
@@ -30,8 +29,9 @@ class CustomerRepositoryTest extends TestContainersTest {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String email = UUID.randomUUID() + faker.internet().safeEmailAddress();
+        String password = faker.internet().password();
 
-        Customer customer = new Customer(firstName, lastName, email);
+        Customer customer = new Customer(firstName, lastName, email, password);
 
         underTest.save(customer);
 
@@ -56,8 +56,9 @@ class CustomerRepositoryTest extends TestContainersTest {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String email = UUID.randomUUID() + faker.internet().safeEmailAddress();
+        String password = faker.internet().password();
 
-        Customer customer = new Customer(firstName, lastName, email);
+        Customer customer = new Customer(firstName, lastName, email, password);
 
         Customer savedCustomer = underTest.save(customer);
 

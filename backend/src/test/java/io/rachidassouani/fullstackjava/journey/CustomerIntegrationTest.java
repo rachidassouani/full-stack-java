@@ -4,7 +4,6 @@ import com.github.javafaker.Faker;
 import io.rachidassouani.fullstackjava.customer.Customer;
 import io.rachidassouani.fullstackjava.customer.CustomerRegistrationRequest;
 import io.rachidassouani.fullstackjava.customer.CustomerUpdateRequest;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,10 +35,10 @@ public class CustomerIntegrationTest {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String email = "integrationTest-" + UUID.randomUUID() + faker.internet().safeEmailAddress();
-
+        String password = faker.internet().password();
 
         CustomerRegistrationRequest request =
-                new CustomerRegistrationRequest(firstName, lastName, email);
+                new CustomerRegistrationRequest(firstName, lastName, email, password);
 
         // send post request
         webTestClient.post()
@@ -61,7 +60,7 @@ public class CustomerIntegrationTest {
                 .getResponseBody();
 
         // make sure that the customer is present
-        Customer expectedCustomer = new Customer(firstName, lastName, email);
+        Customer expectedCustomer = new Customer(firstName, lastName, email, password);
 
         assertThat(allCustomers)
                 .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
@@ -99,10 +98,10 @@ public class CustomerIntegrationTest {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String email = "integrationTest-" + UUID.randomUUID() + faker.internet().safeEmailAddress();
-
+        String password = faker.internet().password();
 
         CustomerRegistrationRequest request =
-                new CustomerRegistrationRequest(firstName, lastName, email);
+                new CustomerRegistrationRequest(firstName, lastName, email, password);
 
         // send post request
         webTestClient.post()
@@ -152,9 +151,10 @@ public class CustomerIntegrationTest {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String email = "integrationTest-" + UUID.randomUUID() + faker.internet().safeEmailAddress();
+        String password = faker.internet().password();
 
         CustomerRegistrationRequest request =
-                new CustomerRegistrationRequest(firstName, lastName, email);
+                new CustomerRegistrationRequest(firstName, lastName, email, password);
 
         // send post request
         webTestClient.post()
@@ -207,7 +207,7 @@ public class CustomerIntegrationTest {
                 .returnResult()
                 .getResponseBody();
 
-        Customer customer = new Customer(id, newFirstName, newLastName, newEmail);
+        Customer customer = new Customer(id, newFirstName, newLastName, newEmail, "password");
 
         assertThat(updatedCustomer).isEqualToComparingFieldByField(customer);
     }

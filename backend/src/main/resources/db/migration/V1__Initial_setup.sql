@@ -1,7 +1,7 @@
 create table customer (
     id BIGSERIAL,
-    email VARCHAR(255) not null,
-    first_name VARCHAR(255) not null,
-    last_name VARCHAR(255) not null,
-    primary key (id)
-    );
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    primary key (id));

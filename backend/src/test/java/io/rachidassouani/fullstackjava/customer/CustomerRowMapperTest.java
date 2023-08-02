@@ -25,7 +25,7 @@ class CustomerRowMapperTest {
         Customer customer = customerRowMapper.mapRow(resultSet, 1);
 
         Customer expectedCustomer =
-                new Customer(1l, "mockedFirstName", "mockedLastName", "mockedEmail@mockedEmail.com");
+                new Customer(1l, "mockedFirstName", "mockedLastName", "mockedEmail@mockedEmail.com", "password");
 
         assertThat(customer.getId()).isEqualTo(expectedCustomer.getId());
         assertThat(customer.getFirstName()).isEqualTo(expectedCustomer.getFirstName());

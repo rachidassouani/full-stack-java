@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -20,12 +21,16 @@ import static org.mockito.Mockito.*;
 class CustomerServiceTest {
 
     private CustomerService underTest;
+
     @Mock
     private CustomerDao customerDao;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @BeforeEach
     void setUp() {
-        underTest = new CustomerService(customerDao);
+        underTest = new CustomerService(customerDao, passwordEncoder);
     }
 
     @Test
@@ -41,7 +46,8 @@ class CustomerServiceTest {
         Customer customer = new Customer(
                 "firsName",
                 "lastName",
-                "email");
+                "email",
+                "password");
 
         when(customerDao.findCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -63,15 +69,19 @@ class CustomerServiceTest {
 
     @Test
     void saveCustomer() {
-
         String firstName = "firstName";
         String lastName = "lastName";
         String email = "email";
+        String password = "password";
 
         CustomerRegistrationRequest request =
-                new CustomerRegistrationRequest(firstName, lastName, email);
+                new CustomerRegistrationRequest(firstName, lastName, email, password);
 
         when(customerDao.isCustomerExistsWithEmail(email)).thenReturn(false);
+
+        String encodedPassword = "FDKLHGKLDFHGVFLDJVMLD";
+        when(passwordEncoder.encode(password)).thenReturn(encodedPassword);
+
         underTest.saveCustomer(request);
 
         ArgumentCaptor<Customer> customerArgumentCaptor = ArgumentCaptor.forClass(Customer.class);
@@ -84,6 +94,7 @@ class CustomerServiceTest {
         assertThat(capturedCustomer.getFirstName()).isEqualTo(request.firstName());
         assertThat(capturedCustomer.getLastName()).isEqualTo(request.lastName());
         assertThat(capturedCustomer.getEmail()).isEqualTo(request.email());
+        assertThat(capturedCustomer.getPassword()).isEqualTo(encodedPassword);
     }
 
     @Test
@@ -92,9 +103,10 @@ class CustomerServiceTest {
         String firstName = "firstName";
         String lastName = "lastName";
         String email = "email";
+        String password = "password";
 
         CustomerRegistrationRequest request =
-                new CustomerRegistrationRequest(firstName, lastName, email);
+                new CustomerRegistrationRequest(firstName, lastName, email, password);
 
         when(customerDao.isCustomerExistsWithEmail(email)).thenReturn(true);
 
@@ -140,7 +152,7 @@ class CustomerServiceTest {
         CustomerUpdateRequest customerUpdateRequest =
                 new CustomerUpdateRequest(newFirstName, newLastName, newEmail);
 
-        Customer customerFromDB = new Customer("Rachid", "Assouani", "rachid@assouani");
+        Customer customerFromDB = new Customer("Rachid", "Assouani", "rachid@assouani", "password");
 
         when(customerDao.findCustomerById(id)).thenReturn(Optional.of(customerFromDB));
         when(customerDao.isCustomerExistsWithEmail(newEmail)).thenReturn(false);
@@ -166,7 +178,7 @@ class CustomerServiceTest {
         CustomerUpdateRequest customerUpdateRequest =
                 new CustomerUpdateRequest(newFirstName, null, null);
 
-        Customer customerFromDB = new Customer("Rachid", "Assouani", "rachid@assouani");
+        Customer customerFromDB = new Customer("Rachid", "Assouani", "rachid@assouani", "password");
 
         when(customerDao.findCustomerById(id)).thenReturn(Optional.of(customerFromDB));
 
@@ -191,7 +203,7 @@ class CustomerServiceTest {
         CustomerUpdateRequest customerUpdateRequest =
                 new CustomerUpdateRequest(null, newLastName, null);
 
-        Customer customerFromDB = new Customer("Rachid", "Assouani", "rachid@assouani");
+        Customer customerFromDB = new Customer("Rachid", "Assouani", "rachid@assouani", "password");
 
         when(customerDao.findCustomerById(id)).thenReturn(Optional.of(customerFromDB));
 
@@ -216,7 +228,7 @@ class CustomerServiceTest {
         CustomerUpdateRequest customerUpdateRequest =
                 new CustomerUpdateRequest(null, null, newEmail);
 
-        Customer customerFromDB = new Customer("Rachid", "Assouani", "rachid@assouani");
+        Customer customerFromDB = new Customer("Rachid", "Assouani", "rachid@assouani", "password");
 
         when(customerDao.findCustomerById(id)).thenReturn(Optional.of(customerFromDB));
 
@@ -241,7 +253,7 @@ class CustomerServiceTest {
         CustomerUpdateRequest customerUpdateRequest =
                 new CustomerUpdateRequest("firstName", "lastName", existingEmail);
 
-        Customer customerFromDB = new Customer("Rachid", "Assouani", "dbemail@mail.com");
+        Customer customerFromDB = new Customer("Rachid", "Assouani", "dbemail@mail.com", "password");
 
         when(customerDao.findCustomerById(id)).thenReturn(Optional.of(customerFromDB));
         when(customerDao.isCustomerExistsWithEmail(existingEmail)).thenReturn(true);
@@ -263,7 +275,7 @@ class CustomerServiceTest {
         CustomerUpdateRequest customerUpdateRequest =
                 new CustomerUpdateRequest(firstName, lastName, email);
 
-        Customer customerFromDB = new Customer(firstName, lastName, email);
+        Customer customerFromDB = new Customer(firstName, lastName, email, "password");
 
         when(customerDao.findCustomerById(id)).thenReturn(Optional.of(customerFromDB));
 

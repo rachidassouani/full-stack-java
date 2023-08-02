@@ -30,8 +30,8 @@ class CustomerJDBCDataAccessServiceTest extends TestContainersTest {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String email = UUID.randomUUID() + faker.internet().safeEmailAddress();
-
-        Customer customer = new Customer(firstName, lastName, email);
+        String password = faker.internet().password();
+        Customer customer = new Customer(firstName, lastName, email, password);
 
         underTest.saveCustomer(customer);
 
@@ -47,8 +47,9 @@ class CustomerJDBCDataAccessServiceTest extends TestContainersTest {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String email = UUID.randomUUID() + faker.internet().safeEmailAddress();
+        String password = faker.internet().password();
 
-        Customer customer = new Customer(firstName, lastName, email);
+        Customer customer = new Customer(firstName, lastName, email, password);
 
         underTest.saveCustomer(customer);
 
@@ -84,8 +85,9 @@ class CustomerJDBCDataAccessServiceTest extends TestContainersTest {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String email = UUID.randomUUID() + faker.internet().safeEmailAddress();
+        String password = faker.internet().password();
 
-        Customer customer = new Customer(firstName, lastName, email);
+        Customer customer = new Customer(firstName, lastName, email, password);
 
         underTest.saveCustomer(customer);
 
@@ -106,8 +108,9 @@ class CustomerJDBCDataAccessServiceTest extends TestContainersTest {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String email = UUID.randomUUID() + faker.internet().safeEmailAddress();
+        String password = faker.internet().password();
 
-        Customer customer = new Customer(firstName, lastName, email);
+        Customer customer = new Customer(firstName, lastName, email, password);
 
         underTest.saveCustomer(customer);
 
@@ -132,8 +135,9 @@ class CustomerJDBCDataAccessServiceTest extends TestContainersTest {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String email = UUID.randomUUID() + faker.internet().safeEmailAddress();
+        String password = faker.internet().password();
 
-        Customer customer = new Customer(firstName, lastName, email);
+        Customer customer = new Customer(firstName, lastName, email, password);
 
         underTest.saveCustomer(customer);
 
@@ -165,8 +169,9 @@ class CustomerJDBCDataAccessServiceTest extends TestContainersTest {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String email = UUID.randomUUID() + faker.internet().safeEmailAddress();
+        String password = faker.internet().password();
 
-        Customer customer = new Customer(firstName, lastName, email);
+        Customer customer = new Customer(firstName, lastName, email, password);
 
         underTest.saveCustomer(customer);
 
@@ -191,8 +196,9 @@ class CustomerJDBCDataAccessServiceTest extends TestContainersTest {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String email = UUID.randomUUID() + faker.internet().safeEmailAddress();
+        String password = faker.internet().password();
 
-        Customer customer = new Customer(firstName, lastName, email);
+        Customer customer = new Customer(firstName, lastName, email, password);
 
         underTest.saveCustomer(customer);
 
@@ -226,8 +232,9 @@ class CustomerJDBCDataAccessServiceTest extends TestContainersTest {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String email = UUID.randomUUID() + faker.internet().safeEmailAddress();
+        String password = faker.internet().password();
 
-        Customer customer = new Customer(firstName, lastName, email);
+        Customer customer = new Customer(firstName, lastName, email, password);
 
         underTest.saveCustomer(customer);
 

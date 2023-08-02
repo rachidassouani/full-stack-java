@@ -4,6 +4,7 @@ import io.rachidassouani.fullstackjava.exception.DuplicateResourceException;
 import io.rachidassouani.fullstackjava.exception.RequestValidationException;
 import io.rachidassouani.fullstackjava.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,9 +15,11 @@ import java.util.List;
 public class CustomerService {
 
     private final CustomerDao customerDao;
+    private final PasswordEncoder passwordEncoder;
 
-    public CustomerService(@Qualifier("jdbc") CustomerDao customerDao) {
+    public CustomerService(@Qualifier("jdbc") CustomerDao customerDao, PasswordEncoder passwordEncoder) {
         this.customerDao = customerDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Customer> findAllCustomers() {
@@ -41,7 +44,8 @@ public class CustomerService {
                 new Customer(
                         customerRegistrationRequest.firstName(),
                         customerRegistrationRequest.lastName(),
-                        customerRegistrationRequest.email())
+                        customerRegistrationRequest.email(),
+                        passwordEncoder.encode(customerRegistrationRequest.password()))
         );
     }
 

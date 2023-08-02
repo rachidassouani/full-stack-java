@@ -47,7 +47,8 @@ class CustomerJPADataAccessServiceTest extends TestContainersTest {
         Customer customer = new Customer(
                 "randomFirstName",
                 "randomLastName",
-                "randomEmail");
+                "randomEmail",
+                "");
 
         underTest.saveCustomer(customer);
         verify(customerRepository).save(customer);
@@ -79,7 +80,8 @@ class CustomerJPADataAccessServiceTest extends TestContainersTest {
         Customer customer = new Customer(
                 "randomFirstName",
                 "randomLastName",
-                "randomEmail");
+                "randomEmail",
+                "password");
 
         underTest.updateCustomer(customer);
         verify(customerRepository).save(customer);
