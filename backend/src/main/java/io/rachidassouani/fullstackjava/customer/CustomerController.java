@@ -20,12 +20,12 @@ public class CustomerController {
     }
 
     @GetMapping
-    public List<Customer> findAllCustomers() {
+    public List<CustomerDTO> findAllCustomers() {
         return customerService.findAllCustomers();
     }
 
     @GetMapping("{customerId}")
-    public Customer findCustomerById(@PathVariable("customerId") Long customerId) {
+    public CustomerDTO findCustomerById(@PathVariable("customerId") Long customerId) {
         return customerService.findCustomerById(customerId);
     }
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -16,18 +17,24 @@ public class CustomerService {
 
     private final CustomerDao customerDao;
     private final PasswordEncoder passwordEncoder;
+    private final CustomerDTOMapper customerDTOMapper;
 
-    public CustomerService(@Qualifier("jdbc") CustomerDao customerDao, PasswordEncoder passwordEncoder) {
+    public CustomerService(@Qualifier("jdbc") CustomerDao customerDao, PasswordEncoder passwordEncoder, CustomerDTOMapper customerDTOMapper) {
         this.customerDao = customerDao;
         this.passwordEncoder = passwordEncoder;
+        this.customerDTOMapper = customerDTOMapper;
     }
 
-    public List<Customer> findAllCustomers() {
-        return customerDao.findAllCustomers();
+    public List<CustomerDTO> findAllCustomers() {
+        return customerDao.findAllCustomers()
+                .stream()
+                .map(customerDTOMapper)
+                .collect(Collectors.toList());
     }
 
-    public Customer findCustomerById(Long customerId) {
+    public CustomerDTO findCustomerById(Long customerId) {
         return customerDao.findCustomerById(customerId)
+                .map(customerDTOMapper)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Customer with id [%s] not found".formatted(customerId)));
     }
@@ -61,7 +68,9 @@ public class CustomerService {
 
     public void updateCustomer(Long customerId, CustomerUpdateRequest customerUpdateRequest) {
 
-        Customer customer = findCustomerById(customerId);
+        Customer customer = customerDao.findCustomerById(customerId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Customer with id [%s] not found".formatted(customerId)));;
 
         /*
          update the customer only if the request body that accompanies the request contains fields
