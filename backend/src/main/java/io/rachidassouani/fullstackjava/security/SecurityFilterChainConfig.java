@@ -11,6 +11,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
 @Configuration
@@ -33,6 +34,8 @@ public class SecurityFilterChainConfig {
         http
                 .csrf(csrf -> csrf.disable())
 
+                .authorizeHttpRequests(auth ->  auth
+                        .requestMatchers(GET, "/ping").permitAll())
                 .authorizeHttpRequests(auth ->  auth
                         .requestMatchers(POST, "/api/v1/customers/**", "/api/v1/auth/login").permitAll()
                         .anyRequest().authenticated())
