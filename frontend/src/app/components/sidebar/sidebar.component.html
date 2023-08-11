@@ -1,0 +1,16 @@
+<h4 class="text-center mt-0">Dashbord</h4>
+<div class="text-center">
+    <p-avatar 
+            image="https://picsum.photos/200" 
+            styleClass="mr-2" 
+            size="xlarge" 
+            shape="circle"></p-avatar>
+</div>
+
+<div>
+    <app-sidebar-item 
+                *ngFor="let item of sideBarItems" 
+                [sideBarItem]="item">
+        {{item.label}}
+    </app-sidebar-item>
+</div>

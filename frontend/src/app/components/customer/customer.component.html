@@ -1,0 +1,28 @@
+<p-sidebar 
+        [(visible)]="sidebarVisible" 
+        [position]="'right'"
+        [transitionOptions]="'300ms cubic-bezier(0, 0, 0.2, 1)'"
+        styleClass="w-30rem">
+    <app-manage-customer></app-manage-customer>
+</p-sidebar>
+
+<div class="flex align-items-stretch" style="height: 99vh;">
+    <div class="flex flex-column align-items-stretch border-right-1 col-2 border-gray-200">
+        <app-sidebar></app-sidebar>
+    </div>
+    <div class="flex flex-column flex-grow-1">
+        <div>
+          <app-header></app-header>  
+        </div>
+        <div class="main-container p-3">
+            <button 
+                pButton 
+                icon="pi pi-plus" 
+                label="Create Customer" 
+                class="p-button-success" (click)="sidebarVisible = true"></button>
+            <div>
+                customers
+            </div>
+        </div>
+    </div>
+</div>
