@@ -10,6 +10,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
+import { MessageModule } from 'primeng/message';
 
 import { CustomerComponent } from './components/customer/customer.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -17,6 +18,8 @@ import { SidebarItemComponent } from './components/sidebar-item/sidebar-item.com
 import { HeaderComponent } from './components/header/header.component';
 import { ManageCustomerComponent } from './components/manage-customer/manage-customer.component';
 import { LoginComponent } from './components/login/login.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,10 @@ import { LoginComponent } from './components/login/login.component';
     MenuModule,
     BrowserModule,
     BrowserAnimationsModule,
-    SidebarModule
+    SidebarModule,
+    FormsModule,
+    HttpClientModule,
+    MessageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

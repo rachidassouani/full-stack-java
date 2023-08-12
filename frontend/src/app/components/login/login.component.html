@@ -9,9 +9,17 @@
         <h1>Sign in to your account</h1>
     </div>
     
+    <div *ngIf="errorMessage" style="text-align: center;">
+        <p-message 
+            severity="error" 
+            [text]="errorMessage">
+        </p-message>
+    </div>
+    
     <div class="field">
         <label for="email">Email</label>
         <input
+            [(ngModel)]="authenticationRequest.email"
             id="email"
             pInputText
             placeholder="Your email address"
@@ -22,6 +30,7 @@
     <div class="field">
         <label for="password">Password</label>
         <input
+            [(ngModel)]="authenticationRequest.password"
             id="password"
             pInputText
             placeholder="Password"
@@ -32,7 +41,8 @@
     <button
         pButton
         label="Login"
-        class="w-full"></button>
+        class="w-full"
+        (click)="login()"></button>
     
     <button
         pButton
