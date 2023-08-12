@@ -4,6 +4,7 @@ import io.rachidassouani.fullstackjava.jwt.JWTAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -34,6 +35,8 @@ public class SecurityFilterChainConfig {
         http
                 .csrf(csrf -> csrf.disable())
 
+                .cors(Customizer.withDefaults())
+
                 .authorizeHttpRequests(auth ->  auth
                         .requestMatchers(GET, "/ping").permitAll())
                 .authorizeHttpRequests(auth ->  auth
@@ -45,6 +48,7 @@ public class SecurityFilterChainConfig {
                 .authenticationProvider(authenticationProvider)
 
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+
                 .exceptionHandling(
                         exceptionHandling -> exceptionHandling.authenticationEntryPoint(authenticationEntryPoint));
         return http.build();
