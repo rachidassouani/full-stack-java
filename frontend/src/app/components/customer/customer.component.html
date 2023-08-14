@@ -20,8 +20,9 @@
                 icon="pi pi-plus" 
                 label="Create Customer" 
                 class="p-button-success" (click)="sidebarVisible = true"></button>
-            <div>
-                customers
+            
+            <div *ngFor="let customer of allCustomers">
+                {{customer.firstName}}
             </div>
         </div>
     </div>

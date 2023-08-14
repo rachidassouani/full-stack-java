@@ -19,7 +19,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { ManageCustomerComponent } from './components/manage-customer/manage-customer.component';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpInterceptorService } from './services/interceptor/http-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,13 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     MessageModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
