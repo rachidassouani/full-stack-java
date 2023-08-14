@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CustomerDTO } from 'src/app/models/customer-dto';
 import { CustomerService } from 'src/app/services/customer/customer.service';
 
@@ -22,10 +22,7 @@ export class CustomerComponent implements OnInit{
     this.customerService.findAllCustomers().subscribe({
       next: (allCustomers) => {
         this.allCustomers = allCustomers;
-        console.log(allCustomers);
-        
       },error: (error) => {
-        console.log(error);
       }
     });
   }

@@ -21,8 +21,11 @@
                 label="Create Customer" 
                 class="p-button-success" (click)="sidebarVisible = true"></button>
             
-            <div *ngFor="let customer of allCustomers">
-                {{customer.firstName}}
+            <div>
+                <app-customer-card 
+                    *ngFor="let customer of allCustomers"
+                    [customer]="customer">
+                </app-customer-card>
             </div>
         </div>
     </div>

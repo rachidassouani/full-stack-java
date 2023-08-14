@@ -11,6 +11,8 @@ import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
 import { MessageModule } from 'primeng/message';
+import { CardModule } from 'primeng/card';
+import { BadgeModule } from 'primeng/badge';
 
 import { CustomerComponent } from './components/customer/customer.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -21,6 +23,7 @@ import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorService } from './services/interceptor/http-interceptor.service';
+import { CustomerCardComponent } from './components/customer-card/customer-card.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import { HttpInterceptorService } from './services/interceptor/http-interceptor.
     SidebarItemComponent,
     HeaderComponent,
     ManageCustomerComponent,
-    LoginComponent
+    LoginComponent,
+    CustomerCardComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +48,9 @@ import { HttpInterceptorService } from './services/interceptor/http-interceptor.
     SidebarModule,
     FormsModule,
     HttpClientModule,
-    MessageModule
+    MessageModule,
+    CardModule,
+    BadgeModule
   ],
   providers: [
     {

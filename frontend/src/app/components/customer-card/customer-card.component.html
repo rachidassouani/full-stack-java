@@ -1,0 +1,39 @@
+<p-card [style]="{width: '316px'}" styleClass="p-card-shadow text-center">
+    <ng-template pTemplate="header">
+        <div>
+            <img 
+                src="https://picsum.photos/200"
+                class="border-round-top cover"
+                height="120px"
+                alt="Card"/>
+        </div>
+
+        <div class="flex justify-content-center" style="margin-top: -50px">
+            <img 
+                src="https://picsum.photos/200" 
+                class="customer-avatar"
+                alt="">
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+        <p-badge [value]="'AZ'"></p-badge>
+        <p class="text-gray-600">{{customer.firstName}} | {{customer.lastName}}</p>
+        <p class="text-gray-600">{{customer.email}}</p>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button
+            pButton 
+            label="Update" 
+            class="p-button-secondary p-button-outlined p-button-rounded">
+        </button>
+
+        <button
+            pButton 
+            label="Delete" 
+            class="p-button-danger p-button-outlined p-button-rounded ml-2">
+        </button>
+
+    </ng-template>
+</p-card>
