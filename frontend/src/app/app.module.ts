@@ -14,7 +14,8 @@ import { MessageModule } from 'primeng/message';
 import { CardModule } from 'primeng/card';
 import { BadgeModule } from 'primeng/badge';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { CustomerComponent } from './components/customer/customer.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -54,7 +55,8 @@ import { CustomerCardComponent } from './components/customer-card/customer-card.
     MessageModule,
     CardModule,
     BadgeModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule
   ],
   providers: [
     {
@@ -62,7 +64,8 @@ import { CustomerCardComponent } from './components/customer-card/customer-card.
       useClass: HttpInterceptorService,
       multi: true
     },
-    MessageService
+    MessageService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

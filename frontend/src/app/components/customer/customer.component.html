@@ -28,12 +28,22 @@
             <div class="flex justify-content-center align-items-center flex-wrap gap-5 mt-4">
                 <app-customer-card 
                     *ngFor="let customer of allCustomers"
-                    [customer]="customer">
+                    [customer]="customer"
+                    (delete)="deleteCustomer($event)">
                 </app-customer-card>
             </div>
         </div>
     </div>
 </div>
 
+<!-- toast after saving new customer -->
 <p-toast position="bottom-center"></p-toast>
 
+<!-- confirmation dialog before deleting a customer -->
+<p-confirmDialog 
+    header="Confirmation" 
+    icon="pi pi-exclamation-triangle"
+    acceptLabel="Delete"
+    acceptButtonStyleClass="p-button-danger"
+    rejectLabel="Cancel">
+</p-confirmDialog>

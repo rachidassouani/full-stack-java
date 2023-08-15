@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CustomerDTO } from 'src/app/models/customer-dto';
 
 @Component({
@@ -10,4 +10,11 @@ export class CustomerCardComponent {
 
   @Input()
   customer: CustomerDTO = {};
+
+  @Output()
+  delete: EventEmitter<CustomerDTO> = new EventEmitter();
+
+  onDelete() {
+    this.delete.emit(this.customer);
+  }
 }

@@ -22,4 +22,8 @@ export class CustomerService {
   saveCustomer(customer: CustomerRegistartionRequest): Observable<void> {
     return this.httpClient.post<void>(this.customerUrl, customer);
   }
+
+  deleteCustomer(customerId: number | undefined): Observable<void> {
+    return this.httpClient.delete<void>(`${this.customerUrl}/${customerId}`);
+  }
 }

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { CustomerDTO } from 'src/app/models/customer-dto';
 import { CustomerRegistartionRequest } from 'src/app/models/customer-registartion-request';
 import { CustomerService } from 'src/app/services/customer/customer.service';
@@ -17,7 +17,8 @@ export class CustomerComponent implements OnInit{
 
   constructor(
     private customerService: CustomerService,
-    private messageService: MessageService) {}
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService) {}
 
   ngOnInit() {
     this.findAllCustomers();
@@ -58,5 +59,33 @@ export class CustomerComponent implements OnInit{
           }
         })
     }
+  }
+
+  deleteCustomer(customerDTO: CustomerDTO) {
+    console.log(customerDTO);
+    this.confirmationService.confirm({
+      header: 'Delete Customer',
+      message: `Are you sure you want to delete ${customerDTO.firstName}, Please note this operation cannot be undone`,
+      accept: () => {
+        if(customerDTO.id !== null && customerDTO.id !== undefined) {
+          this.customerService.deleteCustomer(customerDTO.id).subscribe({
+            
+            next: () => {
+              this.findAllCustomers();
+              
+              // display success notification to the user
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Customer deleted',
+                detail: 'Customer deleted successfully'
+              })
+            
+            }, error: () => {
+
+            }
+          });
+        }
+      }
+    });    
   }
 }
