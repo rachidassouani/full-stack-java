@@ -30,6 +30,7 @@ public class CustomerController {
     }
 
     @PostMapping
+    // we should add validation using Jakarta Bean Validation 
     public ResponseEntity<?> registerCustomer(@RequestBody CustomerRegistrationRequest registrationRequest) {
         customerService.saveCustomer(registrationRequest);
         String jwtToken = jwtUtil.issueToken(registrationRequest.email(), "ROLE_USER");
