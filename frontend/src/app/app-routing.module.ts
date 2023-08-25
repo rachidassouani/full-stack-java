@@ -6,6 +6,7 @@ import { AccessGuardService } from './services/guard/access-guard.service';
 import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
+  {path:'', redirectTo: 'login', pathMatch: 'full'},
   {path:'login', component: LoginComponent},
   {path:'register', component: RegisterComponent},
   {path:'customers', component: CustomerComponent, canActivate: [AccessGuardService]}
