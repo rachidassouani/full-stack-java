@@ -6,7 +6,10 @@
     
         <app-manage-customer 
                 (submit)="save($event)"
-                [customer]="customer">
+                [customer]="customer"
+                [operation]="operation"
+                (cancel)="cancel()"
+                >
         </app-manage-customer>
 </p-sidebar>
 
@@ -23,13 +26,14 @@
                 pButton 
                 icon="pi pi-plus" 
                 label="Create Customer" 
-                class="p-button-success" (click)="sidebarVisible = true"></button>
+                class="p-button-success" (click)="createCustomer()"></button>
             
             <div class="flex justify-content-center align-items-center flex-wrap gap-5 mt-4">
                 <app-customer-card 
                     *ngFor="let customer of allCustomers"
-                    [customer]="customer"
-                    (delete)="deleteCustomer($event)">
+                      [customer]="customer"
+                    (delete)="deleteCustomer($event)"
+                    (update)="updateCustomer($event)">
                 </app-customer-card>
             </div>
         </div>

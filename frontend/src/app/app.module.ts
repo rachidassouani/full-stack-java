@@ -27,6 +27,7 @@ import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorService } from './services/interceptor/http-interceptor.service';
 import { CustomerCardComponent } from './components/customer-card/customer-card.component';
+import { RegisterComponent } from './components/register/register.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { CustomerCardComponent } from './components/customer-card/customer-card.
     HeaderComponent,
     ManageCustomerComponent,
     LoginComponent,
-    CustomerCardComponent
+    CustomerCardComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

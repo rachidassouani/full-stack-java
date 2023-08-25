@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CustomerDTO } from 'src/app/models/customer-dto';
 import { CustomerRegistartionRequest } from 'src/app/models/customer-registartion-request';
+import { CustomerUpdateRequest } from 'src/app/models/customer-update-request';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -25,5 +26,11 @@ export class CustomerService {
 
   deleteCustomer(customerId: number | undefined): Observable<void> {
     return this.httpClient.delete<void>(`${this.customerUrl}/${customerId}`);
+  }
+
+  updateCustomer(
+      customerId: number | undefined, 
+      customerUpdateRequest: CustomerUpdateRequest): Observable<void> {
+        return this.httpClient.put<void>(`${this.customerUrl}/${customerId}`, customerUpdateRequest);
   }
 }

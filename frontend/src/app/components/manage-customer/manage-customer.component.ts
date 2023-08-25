@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CustomerRegistartionRequest } from 'src/app/models/customer-registartion-request';
 
 @Component({
@@ -6,6 +6,7 @@ import { CustomerRegistartionRequest } from 'src/app/models/customer-registartio
   templateUrl: './manage-customer.component.html',
   styleUrls: ['./manage-customer.component.scss']
 })
+
 export class ManageCustomerComponent {
 
   @Input()
@@ -14,11 +15,17 @@ export class ManageCustomerComponent {
   @Output()
   submit: EventEmitter<CustomerRegistartionRequest> = new EventEmitter();
 
+  @Output()
+  cancel: EventEmitter<void> = new EventEmitter();
+
+  @Input()
+  operation: 'create' | 'update' = 'create';
+
   isCustomerValid(): boolean {
     return this.isInputValid(this.customer.firstName)
-          && this.isInputValid(this.customer.lastName)
-          && this.isInputValid(this.customer.email)
-          && this.isInputValid(this.customer.password)
+      && this.isInputValid(this.customer.lastName)
+      && this.isInputValid(this.customer.email)
+      && (this.operation === 'update' || this.isInputValid(this.customer.password))
   }
 
   private isInputValid(input: string | undefined): boolean {
@@ -27,5 +34,9 @@ export class ManageCustomerComponent {
 
   onSubmit() {
     this.submit.emit(this.customer);
+  }
+  
+  onCancel() {
+    this.cancel.emit();
   }
 }

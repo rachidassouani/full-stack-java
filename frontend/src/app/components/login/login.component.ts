@@ -24,12 +24,16 @@ export class LoginComponent {
         next: (authenticationResponse) => {
           localStorage.setItem('user', JSON.stringify(authenticationResponse));
           this.router.navigate(['customers']);
-        },
-        error: (e) => {
+        
+        }, error: (e) => {
           if (e.error.statusCode == 401) {
             this.errorMessage = e.error.message
           }
         }
       });
+  }
+
+  onRegister() {
+    this.router.navigate(['register']);
   }
 }

@@ -6,7 +6,7 @@
                 styleClass="mr-2"
                 size="xlarge"
                 shape="circle"></p-avatar>
-        <h1>Sign in to your account</h1>
+        <h1>Register for an account</h1>
     </div>
     
     <div *ngIf="errorMessage" style="text-align: center;">
@@ -16,10 +16,34 @@
         </p-message>
     </div>
     
+    <div
+    
+    class="field">
+        <label for="firstName">FirstName</label>
+        <input
+            [(ngModel)]="customerRegistartionRequest.firstName"
+            id="firstName"
+            pInputText
+            placeholder="Your firstName"
+            type="text"
+            class="w-full">
+    </div>
+
+    <div class="field">
+        <label for="lastName">Lastname</label>
+        <input
+            [(ngModel)]="customerRegistartionRequest.lastName"
+            id="lastName"
+            pInputText
+            placeholder="Your lastName"
+            type="text"
+            class="w-full">
+    </div>
+    
     <div class="field">
         <label for="email">Email</label>
         <input
-            [(ngModel)]="authenticationRequest.email"
+            [(ngModel)]="customerRegistartionRequest.email"
             id="email"
             pInputText
             placeholder="Your email address"
@@ -30,7 +54,7 @@
     <div class="field">
         <label for="password">Password</label>
         <input
-            [(ngModel)]="authenticationRequest.password"
+            [(ngModel)]="customerRegistartionRequest.password"
             id="password"
             pInputText
             placeholder="Password"
@@ -38,15 +62,15 @@
             class="w-full">
     </div>
 
-    <button
+    <button (click)="onRegisterAccount()"
         pButton
-        label="Login"
-        class="w-full"
-        (click)="login()"></button>
+        label="Create an account"
+        class="w-full">
+    </button>
     
-    <button (click)="onRegister()"
+    <button (click)="onLogin()"
         pButton
-        label="Don't have an account? Signup now."
+        label="Have an account? Login now."
         class="w-full p-button-link text-left pl-0"></button>
     
     </div>

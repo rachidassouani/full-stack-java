@@ -13,8 +13,15 @@ export class CustomerCardComponent {
 
   @Output()
   delete: EventEmitter<CustomerDTO> = new EventEmitter();
+  
+  @Output()
+  update: EventEmitter<CustomerDTO> = new EventEmitter();
 
   onDelete() {
     this.delete.emit(this.customer);
+  }
+
+  onUpdate() {
+    this.update.emit(this.customer);
   }
 }

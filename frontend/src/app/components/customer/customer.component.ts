@@ -15,6 +15,8 @@ export class CustomerComponent implements OnInit{
   allCustomers: CustomerDTO[] = []
   customer: CustomerRegistartionRequest = {};
 
+  operation: 'create' | 'update' = 'create';
+
   constructor(
     private customerService: CustomerService,
     private messageService: MessageService,
@@ -35,7 +37,8 @@ export class CustomerComponent implements OnInit{
 
   save(customerRegistartionRequest: CustomerRegistartionRequest) {
     if (customerRegistartionRequest) {
-      this.customerService.saveCustomer(customerRegistartionRequest)
+      if (this.operation === 'create') {
+        this.customerService.saveCustomer(customerRegistartionRequest)
         .subscribe({
           next: () => {
 
@@ -58,6 +61,29 @@ export class CustomerComponent implements OnInit{
 
           }
         })
+      } else if (this.operation === 'update') {
+        this.customerService.updateCustomer(customerRegistartionRequest.id, customerRegistartionRequest)
+          .subscribe({
+            next: () => {
+              // fetch the list of customers in order to display our new saved customer
+              this.findAllCustomers();
+              
+              // to close sidebar from
+              this.sidebarVisible = false
+
+              // clear the customer form
+              this.customer = {}
+
+              // display success notification to the user
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Customer updaetd',
+                detail: 'Customer updated successfully'
+              })
+              }
+          })
+      }
+      
     }
   }
 
@@ -87,5 +113,25 @@ export class CustomerComponent implements OnInit{
         }
       }
     });    
+  }
+
+
+  updateCustomer(customerToUpdate: CustomerDTO) {
+    this.operation = 'update';
+    this.sidebarVisible = true;
+    this.customer = customerToUpdate;
+  }
+
+  createCustomer() {
+    this.operation = 'create';
+    this.customer = {};
+    this.sidebarVisible = true;
+  }
+
+  // cancel event received
+  cancel() {
+    this.operation = 'create';
+    this.customer = {};
+    this.sidebarVisible = false;
   }
 }
