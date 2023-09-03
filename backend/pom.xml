@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>io.rachidassouani</groupId>
-	<artifactId>fullstackjava</artifactId>
+	<artifactId>fullstackjava-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>fullstackjava</name>
+	<name>fullstackjava-api</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
@@ -21,7 +21,6 @@
 
 	<organization>
 		<name>rachidassouani</name>
-		<!--<url>https://rachidassouani.com</url>-->
 	</organization>
 
 	<dependencies>
@@ -207,7 +206,7 @@
 						</platforms>
 					</from>
 					<to>
-						<image>docker.io/${organization.name}/${project.artifactId}:${project.version}</image>
+						<image>docker.io/${organization.name}/${project.artifactId}:${docker.image.tag}</image>
 						<tags>
 							<tag>latest</tag>
 						</tags>
