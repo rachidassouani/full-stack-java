@@ -12,6 +12,7 @@ import java.util.List;
 public class Customer implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // It is recommanded to use uuid
     private Long id;
 
     @Column(nullable = false, length = 100)

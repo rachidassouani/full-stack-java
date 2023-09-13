@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
+@Transactional()
+// todo it is recommanded to use @Transactional(readOnly = true) and @Transactional on method that change/save data
+// https://vladmihalcea.com/spring-transaction-best-practices/
 public class CustomerService {
 
     private final CustomerDao customerDao;
