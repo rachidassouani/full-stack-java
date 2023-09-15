@@ -27,6 +27,7 @@ public class DefaultExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
 
+    
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleException(Exception e,
                                                     HttpServletRequest request) {
