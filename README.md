@@ -1,8 +1,8 @@
 # full-stack-java
 
-In this project I am going to discover the whole cycle of creating Java enterprise Spring boot application.
+In this project, I tried to discover the whole cycle of creating Java enterprise Spring boot application.
 
-Here's what going to be done:
+Here's what is done:
 
 - API development (Models, Services, Controllers, DAOs, Repositories..)
 
